@@ -2,11 +2,13 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { timingSafeEqual } from 'node:crypto';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PAVONEO_PORT || 4173);
 const MODEL = 'claude-opus-5-5';
 const API_URL = 'https://api.anthropic.com/v1/messages';
+const BIND_HOST = process.env.PAVONEO_BIND_HOST || '127.0.0.1';
 const OPTIONS = {
   size: ['small', 'medium', 'large'],
   entry: ['rise', 'fade', 'pop', 'slide', 'none'],
@@ -168,9 +170,22 @@ async function generateCode(input, fetcher = fetch) {
 }
 
 const server = createServer(async (req, res) => {
-  const origin = `http://127.0.0.1:${server.address()?.port || PORT}`;
+  const publicOrigin = process.env.PAVONEO_PUBLIC_ORIGIN;
+  const origin = publicOrigin || `http://127.0.0.1:${server.address()?.port || PORT}`;
   const path = new URL(req.url || '/', origin).pathname;
-  if (req.headers.host !== new URL(origin).host) return json(res, 403, { error: 'Acceso local únicamente.' });
+  if (req.headers.host !== new URL(origin).host) return json(res, 403, { error: 'Host no autorizado.' });
+  if (publicOrigin) {
+    const user = process.env.PAVONEO_AUTH_USER;
+    const password = process.env.PAVONEO_AUTH_PASSWORD;
+    if (!user || !password) return json(res, 503, { error: 'Configura el acceso protegido antes de publicar la aplicación.' });
+    const expected = Buffer.from(`Basic ${Buffer.from(`${user}:${password}`).toString('base64')}`);
+    const actual = Buffer.from(String(req.headers.authorization || ''));
+    if (actual.length !== expected.length || !timingSafeEqual(actual, expected)) {
+      res.writeHead(401, { 'WWW-Authenticate': 'Basic realm="Pavoneo 360"', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
+      res.end('Acceso privado');
+      return;
+    }
+  }
   if (req.method === 'GET' && (path === '/' || path === '/index.html')) {
     try {
       const html = await readFile(join(ROOT, 'index.html'));
@@ -193,6 +208,14 @@ const server = createServer(async (req, res) => {
       res.writeHead(200, { 'Content-Type': 'text/javascript; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
       res.end(script);
     } catch { json(res, 404, { error: 'Renderizador no disponible.' }); }
+    return;
+  }
+  if (req.method === 'GET' && path === '/rotulo-plano-02-opus.html') {
+    try {
+      const html = await readFile(join(ROOT, 'rotulo-plano-02-opus.html'));
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
+      res.end(html);
+    } catch { json(res, 404, { error: 'Ejemplo no disponible.' }); }
     return;
   }
   if (req.method === 'GET' && path === '/api/status') return json(res, 200, { configured: Boolean(process.env.ANTHROPIC_API_KEY), model: MODEL });
@@ -218,7 +241,10 @@ const server = createServer(async (req, res) => {
 });
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  server.listen(PORT, '127.0.0.1', () => console.log(`Pavoneo local: http://127.0.0.1:${PORT}/ · Opus 5.5 ${process.env.ANTHROPIC_API_KEY ? 'configurado' : 'sin clave API'}`));
+  if (BIND_HOST !== '127.0.0.1' && (!process.env.PAVONEO_PUBLIC_ORIGIN?.startsWith('https://') || !process.env.PAVONEO_AUTH_USER || !process.env.PAVONEO_AUTH_PASSWORD)) {
+    throw new Error('Para escuchar fuera de localhost configura PAVONEO_PUBLIC_ORIGIN=https://..., PAVONEO_AUTH_USER y PAVONEO_AUTH_PASSWORD.');
+  }
+  server.listen(PORT, BIND_HOST, () => console.log(`Pavoneo: ${process.env.PAVONEO_PUBLIC_ORIGIN || `http://127.0.0.1:${PORT}`}/ · Opus 5.5 ${process.env.ANTHROPIC_API_KEY ? 'configurado' : 'sin clave API'}`));
 }
 export { server, generate, generateCode, validDesign, normalizeDesign, validOpusCode, MODEL };
 

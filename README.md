@@ -33,6 +33,23 @@ El flujo de GitHub Actions en `.github/workflows/pages.yml` publica en GitHub Pa
 
 **GitHub Pages no ejecuta `server.mjs` ni puede guardar `ANTHROPIC_API_KEY` de forma segura.** Por eso el botón de generación nueva con Opus muestra una explicación en la demostración pública. Para probar esa función desde Internet hace falta desplegar el servidor en un servicio con variables de entorno y proteger el acceso antes de poner la clave API, ya que cada solicitud es facturable. El código de producción y la clave nunca deben publicarse juntos.
 
+## Despliegue completo en Coolify
+
+El `Dockerfile` ejecuta el editor y la API en el mismo dominio. Crea una **aplicación nueva** desde el repositorio público `https://github.com/artesbuhooficial-max/pavoneo-motion-graphics`, rama `main`, usando **Dockerfile** y puerto interno **4173**. Asigna un dominio `https://...` que Coolify dirija a ese puerto. No uses GitHub Pages como URL de esta aplicación: seguirá siendo una demostración estática.
+
+En **Environment Variables** de esa aplicación configura, solo para ejecución y no para build:
+
+```text
+PAVONEO_PUBLIC_ORIGIN=https://tu-dominio-exacto-sin-barra-final
+PAVONEO_AUTH_USER=tu-usuario
+PAVONEO_AUTH_PASSWORD=una-contraseña-larga
+ANTHROPIC_API_KEY=tu-clave-de-Anthropic
+```
+
+`PAVONEO_BIND_HOST=0.0.0.0` y `PAVONEO_PORT=4173` ya están en el Dockerfile. El servidor se niega a escuchar públicamente si no hay URL HTTPS y credenciales; también rechaza cualquier petición sin autenticación. Coolify debe terminar HTTPS antes de reenviar al contenedor. Abre el dominio en una ventana privada: primero debe pedir usuario y contraseña, y después cargar el editor. Comprueba que el botón **Pedir código animado a Opus 5.5** devuelve un rótulo animado y que la vista previa se mueve. No publiques la contraseña ni la clave en GitHub, en el HTML o en una URL.
+
+Para que los próximos commits desplieguen también el servidor, conecta el repositorio mediante la integración de GitHub de Coolify y activa **Auto Deploy**. Un repositorio público añadido solo por URL no crea el webhook automáticamente.
+
 ## Referencia visual
 
 La paleta azul noche `#0c3065`, azul vivo `#105bbe`, crema `#f6f8ce`, la combinación de titular sans con acento serif cursivo y el archivo `logo-pavoneo.png` proceden del [dashboard de Pavoneo 360º](https://artesbuhooficial-max.github.io/pavoneo-360/oficina/dashboard-maestro.html). El logotipo se sirve localmente para que el planificador funcione sin conexión.

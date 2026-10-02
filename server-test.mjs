@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { once } from 'node:events';
+import { request } from 'node:http';
 import { server, generate, generateCode, normalizeDesign, validOpusCode, MODEL } from './server.mjs';
 
 const design = { size: 'large', entry: 'slide', background: 'navy', layout: 'lower', accent: 'corner', emphasis: 'first', textMotion: 'stagger', concept: 'Una semilla crece como metáfora del proceso creativo.', elements: [
@@ -9,6 +10,9 @@ const design = { size: 'large', entry: 'slide', background: 'navy', layout: 'low
 const input = { caption: 'TEXTO EXACTO', shot: 'Primer plano', voice: 'Mensaje', duration: 5 };
 const opusCode = {concept:'Una línea de luz expresa el comienzo de una idea y atraviesa la escena.',html:'<svg class="linea" viewBox="0 0 100 100"><path d="M0 50H100"/></svg>',css:'#opus-stage{background:#0c3065} .linea{width:100%;animation:mover 5s linear both}@keyframes mover{from{transform:translateX(-100%)}to{transform:translateX(100%)}}',javascript:'document.querySelector(".linea").style.opacity="1";'};
 const oldKey = process.env.ANTHROPIC_API_KEY;
+const oldPublicOrigin = process.env.PAVONEO_PUBLIC_ORIGIN;
+const oldAuthUser = process.env.PAVONEO_AUTH_USER;
+const oldAuthPassword = process.env.PAVONEO_AUTH_PASSWORD;
 process.env.ANTHROPIC_API_KEY = 'fake-test-key';
 let providerRequest;
 const fakeProvider = async (url, options) => {
@@ -83,9 +87,39 @@ try {
   assert.equal(coded.status, 200);
   assert.deepEqual((await coded.json()).code, opusCode);
   globalThis.fetch = nativeFetch;
+  const example = await nativeFetch(`${base}/rotulo-plano-02-opus.html`);
+  assert.equal(example.status, 200);
+  process.env.PAVONEO_PUBLIC_ORIGIN = 'https://pavoneo.example.test';
+  process.env.PAVONEO_AUTH_USER = 'tester';
+  process.env.PAVONEO_AUTH_PASSWORD = 'test-only-password';
+  const getProtected = (path, headers) => new Promise((resolve, reject) => {
+    const req = request(`${base}${path}`, { headers }, res => {
+      res.resume();
+      res.on('end', () => resolve({ status: res.statusCode, headers: res.headers }));
+    });
+    req.on('error', reject);
+    req.end();
+  });
+  const host = { host: 'pavoneo.example.test' };
+  const protectedPage = await getProtected('/', host);
+  assert.equal(protectedPage.status, 401);
+  assert.match(protectedPage.headers['www-authenticate'], /Basic/);
+  const auth = { ...host, authorization: `Basic ${Buffer.from('tester:test-only-password').toString('base64')}` };
+  assert.equal((await getProtected('/', auth)).status, 200);
+  assert.equal((await getProtected('/api/status', auth)).status, 200);
+  assert.equal((await getProtected('/api/status', { ...host, authorization: 'Basic invalid' })).status, 401);
+  assert.equal((await getProtected('/api/status', { ...auth, host: 'other.example.test' })).status, 403);
+  delete process.env.PAVONEO_AUTH_PASSWORD;
+  assert.equal((await getProtected('/', host)).status, 503);
   console.log('OK: local server, origin guard, missing key, Opus 5.5 request and validated design');
 } finally {
   await new Promise(resolve => server.close(resolve));
   if (oldKey === undefined) delete process.env.ANTHROPIC_API_KEY;
   else process.env.ANTHROPIC_API_KEY = oldKey;
+  if (oldPublicOrigin === undefined) delete process.env.PAVONEO_PUBLIC_ORIGIN;
+  else process.env.PAVONEO_PUBLIC_ORIGIN = oldPublicOrigin;
+  if (oldAuthUser === undefined) delete process.env.PAVONEO_AUTH_USER;
+  else process.env.PAVONEO_AUTH_USER = oldAuthUser;
+  if (oldAuthPassword === undefined) delete process.env.PAVONEO_AUTH_PASSWORD;
+  else process.env.PAVONEO_AUTH_PASSWORD = oldAuthPassword;
 }
