@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c3065">
+  <title>Plan de reel · Pavoneo 360°</title>
+  <style>
+    :root{font-family:Inter,"Segoe UI",Arial,sans-serif;color:#2c2434;background:#f6f1ed;font-synthesis:none}[hidden]{display:none!important}
+    *{box-sizing:border-box}body{margin:0}button,input,textarea{font:inherit}button{cursor:pointer}
+    .hero{background:#ed6b5e;color:#fff;position:relative;overflow:hidden}
+    .hero:before{content:"";position:absolute;width:440px;height:440px;border:1px solid #ffffff22;border-radius:50%;right:-100px;top:-240px;box-shadow:0 0 0 70px #ffffff08,0 0 0 140px #ffffff07;pointer-events:none}
+    .wrap{max-width:1160px;margin:auto;padding:0 26px}.hero .wrap{padding-top:24px;padding-bottom:42px;position:relative}
+    .brand{display:flex;align-items:center;gap:12px;letter-spacing:.13em;text-transform:uppercase;font-size:12px;font-weight:800;color:#fff}
+    .brand-mark{width:28px;height:28px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:17px;line-height:1;transform:rotate(-25deg)}
+    .hero-grid{display:flex;align-items:end;justify-content:space-between;gap:25px;margin-top:32px}.eyebrow{color:#fff;text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:800;margin:0 0 10px}
+    h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(38px,5vw,65px);font-weight:400;letter-spacing:-.035em;line-height:1.04;margin:0}.hero-copy{color:#fff6f3;max-width:570px;line-height:1.55;margin:16px 0 0}
+    .hero-note{border-left:2px solid #fff;padding-left:16px;color:#fff6f3;max-width:250px;font-size:13px;line-height:1.55;margin-bottom:5px}
+    main.wrap{padding-top:28px;padding-bottom:70px}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:24px}
+    .project-block{flex:1;min-width:250px}.field-label{display:block;text-transform:uppercase;letter-spacing:.14em;font-size:10px;font-weight:800;color:#7b6b7e;margin:0 0 8px}
+    .project-title{font-family:Georgia,"Times New Roman",serif;font-size:24px;width:100%;max-width:590px;background:transparent;border:0;border-bottom:1px solid #d6cbd0;padding:3px 0 8px;color:#2c2434;outline-offset:4px}
+    .actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.button{border:1px solid #d9cbd0;border-radius:100px;background:#fff;color:#302336;padding:11px 17px;font-weight:750;font-size:13px;line-height:1;min-height:42px;transition:transform .15s,background .15s}
+    .button:hover{transform:translateY(-1px);background:#f9ebe5}.button.primary{background:#bf665d;color:#fff;border-color:#bf665d}.button.primary:hover{background:#a84f48}.button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #d48b77;outline-offset:2px}
+    .overview{display:grid;grid-template-columns:1fr 265px;gap:16px;margin-bottom:27px}.summary,.duration-card{background:#fff;border:1px solid #e9dfe1;border-radius:20px;box-shadow:0 5px 24px #291b2810}
+    .summary{padding:21px 24px}.summary-top{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}.summary h2{font-size:15px;margin:0;font-weight:800}.summary small{color:#756976}
+    .phase-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:16px}.phase{font-size:12px;font-weight:700;color:#704e56;background:#faece7;border:1px solid #f1d7cc;padding:8px 11px;border-radius:99px}.phase-arrow{color:#ad969d}
+    .duration-card{padding:18px 21px;background:#f7dfd7;border-color:#f0c9bb;display:flex;justify-content:space-between;align-items:center;gap:12px}.duration-value{font-family:Georgia,"Times New Roman",serif;font-size:42px;line-height:1;white-space:nowrap}.duration-meta{font-size:11px;color:#76575b;text-align:right;line-height:1.5}.duration-card.over{background:#fbe0df;border-color:#d87272}.duration-card.over .duration-value{color:#a92e37}
+    .list-heading{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:0 0 15px}.list-heading h2{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:26px;margin:0}.save-status{font-size:12px;color:#786d78}
+    .cards{display:grid;gap:14px}.card{display:grid;grid-template-columns:64px 1fr;background:#fff;border:1px solid #e7dce0;border-radius:20px;box-shadow:0 5px 24px #291b2810;overflow:hidden;transition:border-color .15s,box-shadow .15s}.card:focus-within{border-color:#d3a19a;box-shadow:0 7px 30px #6a384327}.card.dragging{opacity:.48}.card.drag-over{border-color:#bf665d;border-style:dashed}
+    .card-rail{background:#faf0ec;border-right:1px solid #efdfd8;display:flex;align-items:center;flex-direction:column;padding-top:23px;gap:12px}.card-number{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#33263a;color:#fff;font-size:13px;font-weight:800}.rail-line{width:1px;flex:1;background:#dcc8c7;margin-bottom:20px}
+    .card-main{padding:19px 21px 20px}.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.card-kicker{font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:#bd655f}.card-actions{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.icon-button{height:31px;min-width:31px;padding:0 8px;border:1px solid #e8dfe1;border-radius:8px;background:#fff;color:#5d4e61;font-weight:750}.icon-button:hover{background:#faece7}.icon-button:disabled{opacity:.35;cursor:not-allowed}.icon-button.delete{color:#9e4446}.drag-handle{cursor:grab;color:#8b7889}.drag-handle:active{cursor:grabbing}
+    .fields{display:grid;grid-template-columns:1.35fr 1.4fr 1.1fr 100px;gap:13px}.field{min-width:0}.field label{display:block;color:#786b79;text-transform:uppercase;letter-spacing:.11em;font-weight:800;font-size:10px;margin-bottom:7px}.field textarea,.field input{width:100%;border:1px solid #e4dadd;border-radius:10px;background:#fcfaf9;color:#2d2632;padding:10px 11px;line-height:1.42;min-height:72px;resize:vertical}.field input{min-height:0;height:44px}.field input[type=number]{text-align:center}.field textarea::placeholder{color:#aea3aa}
+    .duration-field .duration-input{display:flex;align-items:center;gap:5px}.duration-field .duration-input span{font-size:12px;color:#887a85}.card-foot{display:flex;justify-content:space-between;gap:10px;margin-top:12px;color:#a0949e;font-size:11px}.empty{padding:35px;text-align:center;background:#fff;border:1px dashed #cbb9c4;border-radius:18px;color:#796a76}
+    .footer{font-size:12px;color:#857783;margin-top:22px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.footer a{color:#8c4c55}
+    .caption-button{border:1px solid #e6c6bb;background:#fff5f1;color:#944e4b;border-radius:8px;padding:7px 10px;font-size:11px;font-weight:800}.caption-button:hover{background:#fbe5dd}
+    dialog{border:0;padding:0;border-radius:22px;box-shadow:0 24px 90px #1d122780;width:min(900px,calc(100% - 24px));max-height:calc(100vh - 30px);color:#2c2434}dialog::backdrop{background:#211a2bcc}.modal{padding:22px}.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:17px}.modal-head h2{font-family:Georgia,"Times New Roman",serif;font-size:29px;font-weight:400;margin:0}.modal-head p{color:#756875;font-size:13px;margin:6px 0 0}.modal-grid{display:grid;grid-template-columns:280px 1fr;gap:22px}.preview-shell{background:#e9e0df;border-radius:15px;padding:12px;display:grid;place-items:center}.preview-shell iframe{width:220px;height:390px;border:0;background:transparent;box-shadow:0 8px 30px #1d122744}.caption-settings{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px}.caption-settings label{display:grid;gap:6px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:#756875}.caption-settings select,.caption-settings input{border:1px solid #dfd3d8;background:#fff;border-radius:9px;padding:9px 10px;color:#2c2434;min-width:0}.code-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:#756875;margin-bottom:7px}.code-output{width:100%;height:155px;resize:vertical;border:1px solid #dfd3d8;border-radius:10px;background:#faf7f6;padding:11px;font-family:Consolas,monospace;font-size:11px;line-height:1.4;color:#4a3c4c}.modal-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.modal-hint{font-size:11px;color:#81737f;line-height:1.5;margin:11px 0 0}
+    @media(max-width:850px){.overview{grid-template-columns:1fr}.duration-card{justify-content:flex-start}.duration-meta{text-align:left}.fields{grid-template-columns:1fr 1fr}.hero-note{display:none}}
+    @media(max-width:590px){.wrap{padding-left:16px;padding-right:16px}.hero .wrap{padding-top:20px;padding-bottom:32px}.hero-grid{margin-top:25px}.hero-copy{font-size:14px}.toolbar{align-items:stretch}.actions{width:100%}.actions .button{flex:1}.summary{padding:18px}.phase-row{gap:6px}.phase{font-size:11px}.phase-arrow{display:none}.card{grid-template-columns:45px 1fr}.card-rail{padding-top:17px}.card-number{width:28px;height:28px;font-size:11px}.card-main{padding:15px 12px}.card-head{align-items:flex-start}.card-kicker{padding-top:8px}.fields{grid-template-columns:1fr}.field textarea{min-height:65px}.duration-field input{max-width:100px}.card-foot span{display:none}.drag-handle{display:none}.modal{padding:17px}.modal-grid{grid-template-columns:1fr}.preview-shell iframe{width:150px;height:267px}.caption-settings{grid-template-columns:1fr 1fr}}
+    /* Paleta y jerarquía del dashboard Pavoneo 360º: azul noche, azul vivo, blanco y crema. */
+    :root{font-family:Manrope,"Segoe UI",Arial,sans-serif;color:#0c3065;background:#f7f5ef}
+    .hero{background:linear-gradient(115deg,#081f43 0%,#0c3065 52%,#075abb 100%)}
+    .hero:before{width:650px;height:650px;right:-170px;top:-360px;border-color:#ffffff18;box-shadow:0 0 0 100px #ffffff05,0 0 0 200px #ffffff04}
+    .brand{color:#fff}.brand-logo{width:38px;height:42px;object-fit:contain;flex:none}.brand-sub{color:#f6f8ce;font-weight:600}
+    .eyebrow{color:#f6f8ce}.hero h1{font-family:Manrope,"Segoe UI",Arial,sans-serif;font-weight:800;letter-spacing:-.065em}.hero h1 em{font-family:"DM Serif Display",Georgia,serif;font-style:italic;font-weight:400;color:#f6f8ce;letter-spacing:-.035em}.hero-copy,.hero-note{color:#dcebf9}.hero-note{border-color:#f6f8ce}
+    .project-title{font-family:Manrope,"Segoe UI",Arial,sans-serif;font-weight:750;color:#0c3065;border-color:#b8cfe2}.field-label,.field label,.caption-settings label,.code-label{color:#527697}
+    .button{border-color:#c9deef;color:#0c3065}.button:hover,.icon-button:hover{background:#eaf5ff}.button.primary{background:#105bbe;border-color:#105bbe}.button.primary:hover{background:#074d9e}.button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline-color:#73aef0}
+    .summary,.duration-card,.card{border-color:#dcebf9;box-shadow:0 8px 28px #2a6bac11}.summary h2,.list-heading h2{color:#0c3065}.summary small,.save-status,.footer{color:#527697}
+    .phase{color:#0c3065;background:#eaf5ff;border-color:#dcebf9}.phase-arrow{color:#75a0cc}.duration-card{background:#eaf5ff;border-color:#d0e6fa}.duration-value{font-family:Manrope,"Segoe UI",Arial,sans-serif;font-weight:800;color:#105bbe}.duration-meta{color:#527697}
+    .card:focus-within{border-color:#67a7e9;box-shadow:0 7px 30px #105bbe22}.card.drag-over{border-color:#105bbe}.card-rail{background:#eaf5ff;border-color:#dcebf9}.card-number{background:#0c3065}.rail-line{background:#bed4e7}.card-kicker{color:#105bbe}.icon-button{border-color:#dcebf9;color:#0c3065}.icon-button.delete{color:#a73445}.field textarea,.field input{border-color:#d6e3ea;background:#fbfdff;color:#0f315c}.field textarea::placeholder{color:#8aa4b9}.caption-button{border-color:#b9d8f1;background:#eaf5ff;color:#0c3065}.caption-button:hover{background:#dceeff}
+    dialog{color:#0c3065;box-shadow:0 24px 90px #071f4380}dialog::backdrop{background:#071f43cc}.modal-head h2{font-family:Manrope,"Segoe UI",Arial,sans-serif;font-weight:800;color:#0c3065}.modal-head p,.modal-hint{color:#527697}.preview-shell{background:#dcebf9}.caption-settings select,.caption-settings input,.code-output{border-color:#c9deef;color:#0c3065}.code-output{background:#f7fbff}.ai-panel{background:#eaf5ff;border:1px solid #d3e8fa;border-radius:12px;padding:12px;margin-bottom:14px}.ai-panel p{font-size:12px;color:#527697;margin:7px 0 0;line-height:1.45}.ai-panel .button{background:#0c3065;border-color:#0c3065;color:#fff}.ai-panel .button:hover{background:#105bbe}.ai-panel .button:disabled{opacity:.55;cursor:wait}.motion-brief{margin-top:10px;font-size:12px;line-height:1.5;color:#0c3065;white-space:pre-line}.motion-brief:empty{display:none}
+  </style>
+</head>
+<body>
+  <header class="hero"><div class="wrap">
+    <div class="brand"><img class="brand-logo" src="logo-pavoneo.png" alt="Artes Búho"><span>PAVONEO 360º · ARTES BÚHO <span class="brand-sub">/ ESTUDIO DE REELS</span></span></div>
+    <div class="hero-grid"><div><p class="eyebrow">Creación con acompañamiento · guion visual</p><h1>Una idea,<br><em>plano a plano.</em></h1><p class="hero-copy">Ordena la historia, afina cada frase y encuentra el ritmo de tu reel. Todo se guarda en este navegador mientras trabajas.</p></div><div class="hero-note">Una herramienta de trabajo para presentar una obra con claridad y respetar la voz de quien la creó.</div></div>
+  </div></header>
+  <main class="wrap">
+    <section class="toolbar" aria-label="Proyecto y acciones"><div class="project-block"><label class="field-label" for="project-title">Nombre del proyecto</label><input class="project-title" id="project-title" maxlength="100" value="Pavoneo 360° · Reel de presentación"></div><div class="actions"><button class="button" id="export-project" type="button">Guardar proyecto</button><button class="button" id="import-project" type="button">Abrir proyecto</button><input id="project-file" type="file" accept="application/json,.json" hidden><button class="button" id="reset-button" type="button">Recuperar ejemplo</button><button class="button primary" id="add-button" type="button">+ Añadir plano</button></div></section>
+    <section class="overview" aria-label="Resumen del reel"><div class="summary"><div class="summary-top"><h2>El recorrido de la historia</h2><small id="scene-count"></small></div><div class="phase-row"><span class="phase">01 · Crear</span><span class="phase-arrow">→</span><span class="phase">02 · Dar forma</span><span class="phase-arrow">→</span><span class="phase">03 · Presentar</span><span class="phase-arrow">→</span><span class="phase">04 · Acompañar</span></div></div><div class="duration-card" id="duration-card"><div><span class="field-label">Duración total</span><strong class="duration-value" id="total-time">0:00</strong></div><div class="duration-meta" id="duration-note">Objetivo del ejemplo<br>menos de 90 s</div></div></section>
+    <div class="list-heading"><h2>Secuencia de planos</h2><span class="save-status" id="save-status" role="status" aria-live="polite">Guardado en este navegador</span></div>
+    <section class="cards" id="cards" aria-label="Planos editables"></section>
+    <div class="footer"><span>Usa ↑ ↓ para cambiar el orden. En ordenador también puedes arrastrar desde ⋮⋮.</span><span>El guion se guarda en este navegador. <a href="rotulo-plano-02-opus.html" target="_blank" rel="noopener">Ver ejemplo animado de Opus</a>.</span></div>
+  </main>
+  <dialog id="caption-dialog" aria-labelledby="caption-dialog-title"><div class="modal">
+    <div class="modal-head"><div><h2 id="caption-dialog-title">Rótulo animado</h2><p>El texto de la tarjeta permanece exacto. Ajusta el diseño o pide una propuesta a Opus 5.5.</p></div><button class="icon-button" id="close-dialog" type="button" aria-label="Cerrar">×</button></div>
+    <div class="modal-grid"><div class="preview-shell"><iframe id="caption-preview" title="Vista previa del rótulo" sandbox="allow-scripts"></iframe></div><div>
+      <div class="ai-panel"><button class="button" id="generate-ai" type="button">✦ Pedir código animado a Opus 5.5</button><p id="ai-status" role="status" aria-live="polite">Opus escribirá el HTML, CSS y JavaScript de este rótulo.</p><p>La aplicación muestra y exporta el código escrito por Opus. Cada generación consume créditos de tu API de Anthropic.</p><div class="motion-brief" id="motion-brief"></div><button class="button" id="manual-mode" type="button" hidden>Volver al diseño manual</button></div>
+      <div class="caption-settings" id="caption-settings">
+        <label>Tamaño<select id="caption-size"><option value="medium">Mediano</option><option value="large">Grande</option><option value="small">Pequeño</option></select></label>
+        <label>Entrada<select id="caption-entry"><option value="rise">Ascenso suave</option><option value="fade">Fundido</option><option value="pop">Aparición</option><option value="slide">Deslizar</option><option value="none">Sin animación</option></select></label>
+        <label>Fondo<select id="caption-background"><option value="navy">Azul noche</option><option value="blue">Azul vivo</option><option value="transparent">Transparente</option></select></label>
+        <label>Posición<select id="caption-layout"><option value="center">Centro</option><option value="left">Izquierda</option><option value="lower">Zona inferior</option></select></label>
+        <label>Acento<select id="caption-accent"><option value="line">Línea crema</option><option value="corner">Esquina crema</option><option value="none">Sin acento</option></select></label>
+        <label>Palabra destacada<select id="caption-emphasis"><option value="none">Ninguna</option><option value="first">Primera</option><option value="last">Última</option></select></label>
+        <label>Ritmo del texto<select id="caption-textMotion"><option value="steady">Entrada conjunta</option><option value="stagger">Palabra a palabra</option><option value="wipe">Revelado</option><option value="cinematic">Cinemático</option></select></label>
+        <label>Duración (s)<input id="caption-duration" type="number" min="1" max="60" step="1" value="5"></label>
+      </div>
+      <div class="code-label" id="code-label">Fragmento HTML + CSS</div><textarea class="code-output" id="caption-code" readonly spellcheck="false" aria-label="Código HTML del rótulo"></textarea>
+      <div class="modal-actions"><button class="button" id="replay-caption" type="button">↻ Repetir vista</button><button class="button" id="copy-caption" type="button">Copiar código</button><button class="button primary" id="download-caption" type="button">Descargar .html</button></div>
+      <p class="modal-hint" id="caption-feedback">El código se puede pegar en una página HTML. El archivo descargado funciona sin conexión y mantiene formato vertical 9:16.</p>
+    </div></div></div></dialog>
+  <script src="motion-renderer.js"></script>
+  <script>
+  (() => {
+    'use strict';
+    const KEY = 'pavoneo360_reel_planner_v1';
+    const STATIC_DEMO = (location.hostname || '').endsWith('.github.io');
+    const example = {
+      title: 'Pavoneo 360° · Reel de presentación',
+      scenes: [
+        {shot:'Primerísimo plano de manos que abren un cuaderno y prueban una melodía. Luz natural, textura real.',voice:'Crear es un proceso vivo.',caption:'CREAR ES UN PROCESO VIVO',duration:6},
+        {shot:'Fragmentos de ensayo: mirada, respiración, una nota que se repite, pintura o escritura.',voice:'Lo que vivimos se transforma en emoción, pensamiento o idea.',caption:'LO VIVIDO SE TRANSFORMA',duration:8},
+        {shot:'La obra toma forma: artista interpreta un momento auténtico. Dejar respirar el sonido.',voice:'Y un día, esa obra existe.',caption:'LA OBRA YA EXISTE',duration:5},
+        {shot:'Corte a materiales dispersos sobre la mesa; después una selección clara de imágenes y palabras.',voice:'Entonces llega otra tarea: presentarla con claridad, sin traicionar su esencia.',caption:'CLARIDAD, SIN PERDER LA ESENCIA',duration:8},
+        {shot:'Conversación cercana con el artista; notas y referencias de su proyecto ya existente.',voice:'En Pavoneo 360° escuchamos tu proyecto, analizamos lo que ya eres y ordenamos los conceptos contigo.',caption:'CONSULTORÍA + ANÁLISIS',duration:9},
+        {shot:'El artista elige entre materiales propios; el equipo escucha y acompaña sin ocupar el centro.',voice:'La obra y la identidad son tuyas. Nosotros no las definimos: te ayudamos a presentarlas fielmente.',caption:'TU OBRA. TU IDENTIDAD.',duration:7},
+        {shot:'Calendario de rodaje, localización, cámara y artista preparando la sesión.',voice:'Planificamos la grabación y creamos materiales audiovisuales coherentes con tu identidad.',caption:'PLANIFICACIÓN + GRABACIÓN',duration:9},
+        {shot:'Montaje de edición: selección de clips, revisión de texto y pequeños ajustes con cuidado.',voice:'Revisamos cada pieza para que imagen, mensaje y tono cuenten la misma historia.',caption:'MATERIALES + REVISIONES CUIDADAS',duration:8},
+        {shot:'Pantalla del panel digital: fases, avances, hoja maestra y dosier digital en evolución.',voice:'Un panel digital te deja seguir las fases. La hoja maestra y el dosier vivo mantienen todo conectado.',caption:'FASES · HOJA MAESTRA · DOSIER VIVO',duration:10},
+        {shot:'Un programador o promotor abre el dosier; corte al artista en directo frente al público.',voice:'Así, programadores y promotores reciben una presentación clara del proyecto que tú has creado.',caption:'PARA PROGRAMADORES Y PROMOTORES',duration:8},
+        {shot:'Retrato sereno del artista. Cierre con tipografía sobre fondo cálido y un instante de música.',voice:'Tú te comunicas a través del arte. Nosotros te ayudamos a presentarlo.',caption:'TÚ CREAS. TE AYUDAMOS A PRESENTARLO.',duration:8}
+      ]
+    };
+    const $ = id => document.getElementById(id);
+    const cards = $('cards');
+    const status = $('save-status');
+    let saveTimer;
+    let draggedIndex = null;
+    let activeCaptionId = null;
+    function freshExample(){return {title:example.title,scenes:example.scenes.map(scene => ({...scene,id:makeId()}))};}
+    function makeId(){return typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`;}
+    function normalizeProject(saved){
+      if(!saved||typeof saved.title!=='string'||!Array.isArray(saved.scenes)||saved.scenes.length>200)throw new Error('Archivo de proyecto inválido.');
+      return {title:saved.title.slice(0,100),scenes:saved.scenes.filter(s=>s&&typeof s==='object').map(s=>({id:String(s.id||makeId()),shot:String(s.shot||'').slice(0,1000),voice:String(s.voice||'').slice(0,1000),caption:String(s.caption||'').slice(0,300),duration:Math.max(0,Math.min(300,Number(s.duration)||0)),design:s.design&&typeof s.design==='object'?s.design:null,motionPlan:s.motionPlan&&typeof s.motionPlan==='object'?s.motionPlan:null,opusCode:validOpusCode(s.opusCode)?s.opusCode:null}))};
+    }
+    function load(){
+      try {const saved=JSON.parse(localStorage.getItem(KEY));return normalizeProject(saved);} catch(e){}
+      return freshExample();
+    }
+    let project=load();
+    function escapeHtml(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    function time(seconds){const n=Math.round(seconds);return `${Math.floor(n/60)}:${String(n%60).padStart(2,'0')}`;}
+    function updateSummary(){
+      const total=project.scenes.reduce((sum,s)=>sum+(Number(s.duration)||0),0);
+      $('total-time').textContent=time(total);
+      $('scene-count').textContent=`${project.scenes.length} ${project.scenes.length===1?'plano':'planos'}`;
+      $('duration-card').classList.toggle('over',total>=90);
+      $('duration-note').innerHTML=total>=90?'Por encima del objetivo<br>de 90 s':'Objetivo del ejemplo<br>menos de 90 s';
+    }
+    function save(){
+      try{localStorage.setItem(KEY,JSON.stringify(project));status.textContent='Guardado en este navegador';}
+      catch(e){status.textContent='No se pudo guardar. Revisa el almacenamiento del navegador.';}
+    }
+    function scheduleSave(){status.textContent='Guardando…';clearTimeout(saveTimer);saveTimer=setTimeout(save,250);}
+    function render(){
+      cards.innerHTML=project.scenes.length ? project.scenes.map((s,i)=>`
+        <article class="card" data-id="${escapeHtml(s.id)}" aria-label="Plano ${i+1}">
+          <div class="card-rail"><span class="card-number">${String(i+1).padStart(2,'0')}</span><span class="rail-line" aria-hidden="true"></span></div>
+          <div class="card-main"><div class="card-head"><span class="card-kicker">Plano ${String(i+1).padStart(2,'0')}</span><div class="card-actions">
+            <button class="icon-button drag-handle" type="button" draggable="true" title="Arrastrar para reordenar" aria-label="Arrastrar plano ${i+1}">⋮⋮</button>
+            <button class="icon-button" type="button" data-action="up" title="Subir plano" aria-label="Subir plano ${i+1}" ${i===0?'disabled':''}>↑</button>
+            <button class="icon-button" type="button" data-action="down" title="Bajar plano" aria-label="Bajar plano ${i+1}" ${i===project.scenes.length-1?'disabled':''}>↓</button>
+            <button class="icon-button delete" type="button" data-action="delete" title="Eliminar plano" aria-label="Eliminar plano ${i+1}">×</button>
+          </div></div><div class="fields">
+            <div class="field"><label for="shot-${i}">Tipo / descripción del plano</label><textarea id="shot-${i}" data-field="shot" placeholder="¿Qué vemos?">${escapeHtml(s.shot)}</textarea></div>
+            <div class="field"><label for="voice-${i}">Voz / mensaje</label><textarea id="voice-${i}" data-field="voice" placeholder="¿Qué se dice?">${escapeHtml(s.voice)}</textarea></div>
+            <div class="field"><label for="caption-${i}">Rótulo en pantalla</label><textarea id="caption-${i}" data-field="caption" placeholder="Texto breve y legible">${escapeHtml(s.caption)}</textarea></div>
+            <div class="field duration-field"><label for="duration-${i}">Duración</label><div class="duration-input"><input id="duration-${i}" data-field="duration" type="number" min="0" max="300" step="1" inputmode="numeric" value="${s.duration}" aria-label="Duración del plano ${i+1} en segundos"><span>s</span></div></div>
+          </div><div class="card-foot"><button class="caption-button" type="button" data-action="caption">✦ Diseñar rótulo</button><span>Arrastra o usa las flechas para mover este plano.</span></div></div>
+        </article>`).join('') : '<div class="empty">No hay planos todavía. Añade uno para empezar tu reel.</div>';
+      updateSummary();
+    }
+    $('project-title').value=project.title;
+    $('project-title').addEventListener('input',e=>{project.title=e.target.value;scheduleSave();});
+    $('add-button').addEventListener('click',()=>{project.scenes.push({id:makeId(),shot:'',voice:'',caption:'',duration:5});render();scheduleSave();cards.lastElementChild?.querySelector('textarea')?.focus();});
+    $('reset-button').addEventListener('click',()=>{if(!confirm('¿Sustituir el trabajo actual por el ejemplo de Pavoneo 360°?'))return;project=freshExample();$('project-title').value=project.title;render();scheduleSave();});
+    $('export-project').addEventListener('click',()=>{const blob=new Blob([JSON.stringify(project,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='pavoneo-proyecto.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+    $('import-project').addEventListener('click',()=>$('project-file').click());
+    $('project-file').addEventListener('change',async e=>{const file=e.target.files?.[0];if(!file)return;try{if(file.size>1000000)throw new Error('El archivo supera 1 MB.');const candidate=normalizeProject(JSON.parse(await file.text()));if(!confirm('¿Abrir este proyecto y sustituir el trabajo actual?'))return;project=candidate;$('project-title').value=project.title;render();scheduleSave();}catch(error){status.textContent=error.message||'No se pudo abrir el proyecto.';}finally{e.target.value='';}});
+    cards.addEventListener('input',e=>{const field=e.target.dataset.field;if(!field)return;const card=e.target.closest('.card');const scene=project.scenes.find(s=>s.id===card?.dataset.id);if(!scene)return;if(field==='duration'){scene.duration=Math.max(0,Math.min(300,Number(e.target.value)||0));updateSummary();}else{scene[field]=e.target.value;scene.motionPlan=null;}scene.opusCode=null;scheduleSave();});
+    cards.addEventListener('change',e=>{if(e.target.dataset.field==='duration'){const scene=project.scenes.find(s=>s.id===e.target.closest('.card')?.dataset.id);if(scene)e.target.value=scene.duration;}});
+    cards.addEventListener('click',e=>{const button=e.target.closest('button[data-action]');if(!button)return;const index=project.scenes.findIndex(s=>s.id===button.closest('.card')?.dataset.id);if(index<0)return;const action=button.dataset.action;if(action==='caption'){openCaption(project.scenes[index]);return;}if(action==='delete'){project.scenes.splice(index,1);}else{const next=index+(action==='up'?-1:1);if(next<0||next>=project.scenes.length)return;[project.scenes[index],project.scenes[next]]=[project.scenes[next],project.scenes[index]];}render();scheduleSave();});
+    cards.addEventListener('dragstart',e=>{const card=e.target.closest('.card');if(!card)return;draggedIndex=project.scenes.findIndex(s=>s.id===card.dataset.id);e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',card.dataset.id);card.classList.add('dragging');});
+    cards.addEventListener('dragover',e=>{const card=e.target.closest('.card');if(!card||draggedIndex===null)return;e.preventDefault();cards.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));card.classList.add('drag-over');});
+    cards.addEventListener('drop',e=>{const card=e.target.closest('.card');if(!card||draggedIndex===null)return;e.preventDefault();const to=project.scenes.findIndex(s=>s.id===card.dataset.id);if(to>=0&&to!==draggedIndex){const [scene]=project.scenes.splice(draggedIndex,1);project.scenes.splice(to,0,scene);render();scheduleSave();}draggedIndex=null;cards.querySelectorAll('.drag-over,.dragging').forEach(el=>el.classList.remove('drag-over','dragging'));});
+    cards.addEventListener('dragend',()=>{draggedIndex=null;cards.querySelectorAll('.drag-over,.dragging').forEach(el=>el.classList.remove('drag-over','dragging'));});
+    const DESIGN_FIELDS=['size','entry','background','layout','accent','emphasis','textMotion'];
+    const DEFAULT_DESIGN={size:'medium',entry:'rise',background:'navy',layout:'center',accent:'line',emphasis:'none',textMotion:'steady'};
+    let previewTimer;
+    function selectValue(id,value){const el=$(id);el.value=value;if(el.value!==value)el.value=DEFAULT_DESIGN[id.replace('caption-','')]||'';}
+    function currentDesign(){return Object.fromEntries(DESIGN_FIELDS.map(key=>[key,$(`caption-${key}`).value]));}
+    function captionMarkup(scene){return renderPavoneoCaption(scene,currentDesign(),Math.max(1,Math.min(60,Number($('caption-duration').value)||5)));}
+    function showMotionBrief(plan){
+      const brief=$('motion-brief');
+      if(!plan||typeof plan.concept!=='string'){brief.textContent='';return;}
+      const reasons=Array.isArray(plan.elements)?plan.elements.slice(0,6).filter(el=>typeof el?.meaning==='string').map(el=>`• ${el.meaning.slice(0,180)}`):[];
+      brief.textContent=`Idea visual: ${plan.concept.slice(0,360)}${reasons.length?'\n'+reasons.join('\n'):''}`;
+    }
+    function captionDocument(snippet,seconds,preview=false){return `<!doctype html>\n<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Rótulo Pavoneo 360°</title><style>html,body{width:100%;height:100%;margin:0;overflow:hidden}body{aspect-ratio:9/16}${preview?'.pav-caption__art,.pav-caption__frame{animation-iteration-count:infinite!important}':''}</style></head><body data-duration="${seconds}">${snippet}</body></html>`;}
+    function updateCaptionMode(scene){const coded=!!scene.opusCode;$('caption-settings').hidden=coded;$('manual-mode').hidden=!coded;$('code-label').textContent=coded?'Código completo escrito por Opus 5.5 · HTML + CSS + JavaScript':'Fragmento HTML + CSS';}
+    function refreshCaption(){
+      const scene=project.scenes.find(s=>s.id===activeCaptionId);if(!scene)return;
+      const seconds=Math.max(1,Math.min(60,Number($('caption-duration').value)||5));
+      clearInterval(previewTimer);previewTimer=null;updateCaptionMode(scene);
+      if(scene.opusCode){
+        const documentCode=renderOpusDocument(scene.opusCode,scene.caption,seconds);
+        if(!documentCode){scene.opusCode=null;return refreshCaption();}
+        $('caption-code').value=documentCode;$('caption-preview').srcdoc=documentCode;
+        previewTimer=setInterval(()=>{if(activeCaptionId===scene.id&&$('caption-dialog').open)$('caption-preview').srcdoc=documentCode;},seconds*1000+300);
+        $('caption-feedback').textContent='Este HTML contiene CSS y JavaScript escritos por Opus. La vista previa aislada se repite; el archivo descargado reproduce el código sin conexión.';
+      }else{
+        scene.design={...currentDesign(),duration:seconds};const snippet=captionMarkup(scene);
+        $('caption-code').value=snippet;$('caption-preview').srcdoc=captionDocument(snippet,seconds,true);
+        $('caption-feedback').textContent='El código se puede pegar en una página HTML. El archivo descargado funciona sin conexión y mantiene formato vertical 9:16.';
+      }
+      scheduleSave();
+    }
+    function openCaption(scene){activeCaptionId=scene.id;for(const key of DESIGN_FIELDS)selectValue(`caption-${key}`,scene.design?.[key]||DEFAULT_DESIGN[key]);$('caption-duration').value=Math.max(1,Math.min(60,Number(scene.opusCode?.duration||scene.design?.duration||scene.duration)||5));refreshCaption();showMotionBrief(scene.opusCode||scene.motionPlan);$('caption-dialog').showModal();$('ai-status').textContent=STATIC_DEMO?'La demostración pública permite editar y ver el ejemplo de Opus. La generación nueva requiere un servidor con la API protegida.':location.protocol==='file:'?'Para usar Opus 5.5, inicia el servidor local y abre http://127.0.0.1:4173/.':scene.opusCode?'Código de Opus 5.5 guardado. La vista previa se repite automáticamente.':'Opus escribirá el HTML, CSS y JavaScript de este rótulo.';}
+    [...DESIGN_FIELDS.map(key=>`caption-${key}`),'caption-duration'].forEach(id=>$(id).addEventListener('input',refreshCaption));
+    $('generate-ai').addEventListener('click',async()=>{
+      const scene=project.scenes.find(s=>s.id===activeCaptionId);
+      if(!scene)return;
+      if(location.protocol==='file:'){$('ai-status').textContent='Abre http://127.0.0.1:4173/ tras iniciar server.mjs para generar con IA.';return;}
+      if(STATIC_DEMO){$('ai-status').textContent='Esta demostración pública permite editar y ver el ejemplo animado. Para generar con Opus hace falta desplegar un servidor con la clave API protegida.';return;}
+      if(!scene.caption.trim()){$('ai-status').textContent='Escribe primero el texto exacto del rótulo en la tarjeta.';return;}
+      const button=$('generate-ai');button.disabled=true;$('ai-status').textContent='Opus 5.5 está escribiendo el código de animación…';
+      try{
+        const index=project.scenes.indexOf(scene);
+        const duration=Math.max(1,Math.min(60,Number($('caption-duration').value)||5));
+        const response=await fetch('/api/generate-caption-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({project:project.title,caption:scene.caption,shot:scene.shot,voice:scene.voice,previousCaption:project.scenes[index-1]?.caption||'',nextCaption:project.scenes[index+1]?.caption||'',duration})});
+        const data=await response.json();if(!response.ok)throw new Error(data.error||'No se pudo generar el diseño.');
+        if(activeCaptionId!==scene.id)return;
+        if(!validOpusCode(data.code))throw new Error('Opus devolvió código no admitido.');
+        scene.opusCode={...data.code,duration};
+        refreshCaption();showMotionBrief(scene.opusCode);$('ai-status').textContent='Código HTML, CSS y JavaScript de Opus 5.5 aplicado. Revisa la animación antes de exportar.';
+      }catch(error){$('ai-status').textContent=error.message||'No se pudo conectar con el servicio local.';}
+      finally{button.disabled=false;}
+    });
+    $('manual-mode').addEventListener('click',()=>{const scene=project.scenes.find(s=>s.id===activeCaptionId);if(!scene)return;scene.opusCode=null;refreshCaption();showMotionBrief(scene.motionPlan);$('ai-status').textContent='Diseño manual activo. Puedes pedir nuevo código a Opus cuando quieras.';});
+    $('replay-caption').addEventListener('click',refreshCaption);
+    $('close-dialog').addEventListener('click',()=>$('caption-dialog').close());
+    $('caption-dialog').addEventListener('close',()=>{activeCaptionId=null;clearInterval(previewTimer);previewTimer=null;});
+    $('copy-caption').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('caption-code').value);$('caption-feedback').textContent='Código copiado al portapapeles.';}catch(e){$('caption-code').focus();$('caption-code').select();$('caption-feedback').textContent='Selecciona el código y cópialo con Ctrl+C.';}});
+    $('download-caption').addEventListener('click',()=>{const scene=project.scenes.find(s=>s.id===activeCaptionId);if(!scene)return;const seconds=Math.max(1,Math.min(60,Number($('caption-duration').value)||5));const output=scene.opusCode?renderOpusDocument(scene.opusCode,scene.caption,seconds):captionDocument(captionMarkup(scene),seconds);if(!output)return;const blob=new Blob([output],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=`pavoneo-rotulo-${project.scenes.indexOf(scene)+1}.html`;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);$('caption-feedback').textContent='Archivo HTML descargado.';});
+    render();
+  })();
+  </script>
+</body>
+</html>
+
