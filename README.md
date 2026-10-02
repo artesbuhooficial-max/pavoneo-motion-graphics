@@ -21,7 +21,7 @@ Abre **http://127.0.0.1:4173/** en el navegador. En una tarjeta, escribe el text
 
 Cada solicitud también incluye [CREATIVE_DIRECTION.md](CREATIVE_DIRECTION.md): el encargo de estilo editorial, jerarquía tipográfica, metáfora visual ligada al mensaje y movimiento durante toda la duración. Puedes afinar ese archivo para cambiar la dirección artística de futuras generaciones; los rótulos ya generados conservan su código hasta que vuelvas a pedirlos a Opus.
 
-La generación de código usa `output_config.effort: "xhigh"` y deja hasta 64 000 tokens para el razonamiento y la respuesta. Esto da más margen para una composición original y una animación con desarrollo, pero cada generación puede tardar más y consumir más créditos. La propuesta de diseño manual conserva su ajuste anterior.
+La generación de código usa `output_config.effort: "high"` y un máximo de 24 000 tokens entre razonamiento y respuesta. Mantiene el encargo creativo y reduce el margen de consumo frente a `xhigh`; el coste real depende de los tokens utilizados. La propuesta de diseño manual conserva su ajuste anterior.
 
 `--use-system-ca` usa los certificados de confianza del sistema, necesarios en este equipo para conectar por HTTPS. La clave se lee únicamente desde la variable de entorno del proceso local; no entra en el HTML, el JSON exportado ni el almacenamiento del navegador. El servicio escucha solo en `127.0.0.1`. La vista previa ejecuta el código de Opus en un iframe aislado, sin acceso al origen de la aplicación ni a recursos de red. El HTML descargado incluye una política de contenido que bloquea recursos externos. **Cada clic en el botón envía una solicitud facturable a la API de Anthropic**; el coste depende de las tarifas de tu cuenta y de los tokens utilizados.
 

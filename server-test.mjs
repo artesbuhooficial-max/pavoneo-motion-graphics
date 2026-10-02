@@ -22,7 +22,7 @@ const fakeProvider = async (url, options) => {
 
 try {
   assert.equal(MODEL, 'claude-opus-5-5');
-  assert.equal(CODE_EFFORT, 'xhigh');
+  assert.equal(CODE_EFFORT, 'high');
   assert.deepEqual(await generate(input, fakeProvider), design);
   const sent = JSON.parse(providerRequest.options.body);
   assert.equal(sent.model, MODEL);
@@ -53,7 +53,7 @@ try {
   };
   assert.deepEqual(await generateCode(input, fakeCodeProvider), opusCode);
   assert.equal(JSON.parse(providerRequest.options.body).model, MODEL);
-  assert.equal(JSON.parse(providerRequest.options.body).max_tokens, 64000);
+  assert.equal(JSON.parse(providerRequest.options.body).max_tokens, 24000);
   assert.equal(JSON.parse(providerRequest.options.body).output_config.effort, CODE_EFFORT);
   assert.match(JSON.parse(providerRequest.options.body).system, /TÚ escribes la implementación creativa real/);
   assert.match(JSON.parse(providerRequest.options.body).system, /jerarquía editorial/);
@@ -76,6 +76,7 @@ try {
   const status = await (await nativeFetch(`${base}/api/status`)).json();
   assert.equal(status.configured, false);
   assert.equal(status.model, MODEL);
+  assert.equal(status.effort, CODE_EFFORT);
   const post = (origin = base) => nativeFetch(`${base}/api/generate-caption`, { method: 'POST', headers: { 'content-type': 'application/json', origin }, body: JSON.stringify(input) });
   assert.equal((await post('https://example.com')).status, 403);
   assert.equal((await post()).status, 503);

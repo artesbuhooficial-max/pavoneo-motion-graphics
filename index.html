@@ -204,7 +204,7 @@
       if(location.protocol==='file:'){$('ai-status').textContent='Abre http://127.0.0.1:4173/ tras iniciar server.mjs para generar con IA.';return;}
       if(STATIC_DEMO){$('ai-status').textContent='Esta demostración pública permite editar y ver el ejemplo animado. Para generar con Opus hace falta desplegar un servidor con la clave API protegida.';return;}
       if(!scene.caption.trim()){$('ai-status').textContent='Escribe primero el texto exacto del rótulo en la tarjeta.';return;}
-      const button=$('generate-ai');button.disabled=true;$('ai-status').textContent='Opus 5.5 está desarrollando el concepto y la animación con esfuerzo xhigh. Puede tardar varios minutos…';
+      const button=$('generate-ai');button.disabled=true;$('ai-status').textContent='Opus 5.5 está desarrollando el concepto y la animación con esfuerzo high. Puede tardar unos minutos…';
       try{
         const index=project.scenes.indexOf(scene);
         const duration=Math.max(1,Math.min(60,Number($('caption-duration').value)||5));
