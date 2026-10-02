@@ -204,7 +204,10 @@
       if(location.protocol==='file:'){$('ai-status').textContent='Abre http://127.0.0.1:4173/ tras iniciar server.mjs para generar con IA.';return;}
       if(STATIC_DEMO){$('ai-status').textContent='Esta demostración pública permite editar y ver el ejemplo animado. Para generar con Opus hace falta desplegar un servidor con la clave API protegida.';return;}
       if(!scene.caption.trim()){$('ai-status').textContent='Escribe primero el texto exacto del rótulo en la tarjeta.';return;}
-      const button=$('generate-ai');button.disabled=true;$('ai-status').textContent='Opus 5.5 está desarrollando el concepto y la animación con esfuerzo high. Puede tardar unos minutos…';
+      const button=$('generate-ai');button.disabled=true;
+      const started=Date.now();
+      const progress=setInterval(()=>{$('ai-status').textContent=`Opus 5.5 sigue generando con esfuerzo high (${Math.floor((Date.now()-started)/1000)} s). La vista previa y el código son del diseño anterior hasta que termine.`;},1000);
+      $('ai-status').textContent='Opus 5.5 está generando con esfuerzo high. La vista previa y el código son del diseño anterior hasta que termine.';
       try{
         const index=project.scenes.indexOf(scene);
         const duration=Math.max(1,Math.min(60,Number($('caption-duration').value)||5));
@@ -215,7 +218,7 @@
         scene.opusCode={...data.code,duration};
         refreshCaption();showMotionBrief(scene.opusCode);$('ai-status').textContent='Código HTML, CSS y JavaScript de Opus 5.5 aplicado. Revisa la animación antes de exportar.';
       }catch(error){$('ai-status').textContent=error.message||'No se pudo conectar con el servicio local.';}
-      finally{button.disabled=false;}
+      finally{clearInterval(progress);button.disabled=false;}
     });
     $('manual-mode').addEventListener('click',()=>{const scene=project.scenes.find(s=>s.id===activeCaptionId);if(!scene)return;scene.opusCode=null;refreshCaption();showMotionBrief(scene.motionPlan);$('ai-status').textContent='Diseño manual activo. Puedes pedir nuevo código a Opus cuando quieras.';});
     $('replay-caption').addEventListener('click',refreshCaption);

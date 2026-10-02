@@ -83,7 +83,14 @@ function validOpusCode(value) {
     && !/<\s*\/\s*style\b/i.test(value.css)
     && !/<\s*\/\s*script\b/i.test(value.javascript)
     && !/\b(?:fetch|XMLHttpRequest|WebSocket|EventSource|sendBeacon|localStorage|sessionStorage|document\.cookie|window\.open|eval)\b/i.test(value.javascript)
-    && /(?:@keyframes|animation\s*:|animation-name\s*:)/i.test(value.css);
+    && hasMotion(value);
+}
+function hasMotion(value) {
+  const cssAnimation = /(?:@(?:-webkit-)?keyframes\b|(?:-webkit-)?animation(?:-name)?\s*:)/i.test(value.css);
+  const scriptedAnimation = /(?:requestAnimationFrame\s*\(|\.animate\s*\(|setInterval\s*\()/i.test(value.javascript);
+  const scriptedTransition = /(?:-webkit-)?transition(?:-[\w-]+)?\s*:/i.test(value.css)
+    && /(?:\.classList\.|\.style\.|setAttribute\s*\()/i.test(value.javascript);
+  return cssAnimation || scriptedAnimation || scriptedTransition;
 }
 function invalidOpusCodeReason(value) {
   if (!value || typeof value !== 'object') return 'estructura ausente';
@@ -97,7 +104,7 @@ function invalidOpusCodeReason(value) {
   if (/<\s*\/\s*style\b/i.test(value.css)) return 'cierre style en CSS';
   if (/<\s*\/\s*script\b/i.test(value.javascript)) return 'cierre script en JavaScript';
   if (/\b(?:fetch|XMLHttpRequest|WebSocket|EventSource|sendBeacon|localStorage|sessionStorage|document\.cookie|window\.open|eval)\b/i.test(value.javascript)) return 'API no permitida en JavaScript';
-  if (!/(?:@keyframes|animation\s*:|animation-name\s*:)/i.test(value.css)) return 'falta animación CSS';
+  if (!hasMotion(value)) return 'no se detectó una animación CSS o JavaScript';
   return 'regla de seguridad no identificada';
 }
 function readJson(req) {

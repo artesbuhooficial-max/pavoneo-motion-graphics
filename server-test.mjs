@@ -46,12 +46,17 @@ try {
   assert.deepEqual(await generate(input, async () => new Response(JSON.stringify({ stop_reason: 'end_turn', content: [{ type: 'text', text: JSON.stringify(unusual) }] }), { status: 200 })), normalized);
   await assert.rejects(generate(input, async () => new Response(JSON.stringify({ stop_reason: 'end_turn', content: [{ type: 'text', text: '{}' }] }), { status: 200 })), /elementos gráficos utilizables/);
   assert.equal(validOpusCode(opusCode), true);
+  const jsMotion = {...opusCode,css:'#opus-stage{background:#0c3065;position:relative;overflow:hidden}.linea{width:100%;height:100%;display:block;position:absolute;inset:0}',javascript:'requestAnimationFrame(function frame(t){document.querySelector(".linea").style.transform=`translateX(${t%100}px)`;requestAnimationFrame(frame)})'};
+  assert.equal(validOpusCode(jsMotion), true);
+  assert.equal(validOpusCode({...jsMotion,javascript:'document.querySelector(".linea").style.opacity="1";'}), false);
+  assert.equal(validOpusCode({...jsMotion,css:'#opus-stage{background:#0c3065;transition:background 2s;position:relative;overflow:hidden}.linea{width:100%;height:100%;display:block}',javascript:'document.querySelector("#opus-stage").classList.add("active")'}), true);
   assert.equal(validOpusCode({...opusCode,javascript:'fetch("https://example.com")'}), false);
   const fakeCodeProvider = async (url, options) => {
     providerRequest = {url, options};
     return new Response(JSON.stringify({stop_reason:'end_turn',content:[{type:'text',text:JSON.stringify(opusCode)}]}),{status:200});
   };
   assert.deepEqual(await generateCode(input, fakeCodeProvider), opusCode);
+  assert.deepEqual(await generateCode(input, async()=>new Response(JSON.stringify({stop_reason:'end_turn',content:[{type:'text',text:JSON.stringify(jsMotion)}]}),{status:200})), jsMotion);
   assert.equal(JSON.parse(providerRequest.options.body).model, MODEL);
   assert.equal(JSON.parse(providerRequest.options.body).max_tokens, 24000);
   assert.equal(JSON.parse(providerRequest.options.body).output_config.effort, CODE_EFFORT);
