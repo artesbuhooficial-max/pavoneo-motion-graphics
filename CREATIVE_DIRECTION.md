@@ -9,10 +9,12 @@ La referencia del usuario es un motion design editorial de alto nivel: composici
 - La referencia combina fondos claros, negro intenso y un acento verde. Adapta ese rigor a Pavoneo: azul noche `#0c3065`, azul vivo `#105bbe`, crema `#f6f8ce`, blanco y menta. Puedes usar un fondo claro o oscuro; escoge el que dé mayor contraste. Evita transparencia si el resultado depende de un vídeo de fondo que aquí no existe.
 - El texto exacto del rótulo debe dominar la imagen. En la vista previa de 220 × 390 px, debe leerse sin esfuerzo y caber completo. En 1080 × 1920 px debe mantener el mismo equilibrio. No partas una palabra larga ni la recortes.
 - Usa líneas, máscaras, trazos SVG, transformaciones tipográficas, cambios de escala y profundidad sutil cuando tengan función narrativa. Prefiere 2 o 3 gestos precisos a muchos efectos simultáneos.
+- Busca una solución distinta para cada rótulo: interpreta su verbo, imagen y emoción antes de elegir formas. Una composición bella pero intercambiable entre planos no cumple el encargo.
 
 ## Ritmo y acabado
 
 - Estructura la duración en tres momentos: preparación breve, revelación memorable y cierre limpio. El movimiento debe ser visible durante la pieza, no limitarse a una entrada de un segundo.
+- En el tramo central debe ocurrir una transformación gráfica reconocible, no solo un desplazamiento continuo o un parpadeo. Alterna movimiento y reposo para que cada gesto tenga peso.
 - Usa curvas de aceleración deliberadas, desfases y pausas legibles. Coordina la gráfica con la lectura del texto; deja tiempo para comprenderlo.
 - Mantén 60 fps potenciales: anima principalmente `transform`, `opacity`, `clip-path` o SVG cuando haga falta. Evita cambios costosos de layout por fotograma.
 - Termina en una composición clara que pueda enlazar con el siguiente plano. En la vista previa, el bucle vuelve al inicio; el archivo exportado conserva la duración indicada.

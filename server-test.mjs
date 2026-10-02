@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { once } from 'node:events';
 import { request } from 'node:http';
-import { server, generate, generateCode, normalizeDesign, validOpusCode, MODEL } from './server.mjs';
+import { server, generate, generateCode, normalizeDesign, validOpusCode, MODEL, CODE_EFFORT } from './server.mjs';
 
 const design = { size: 'large', entry: 'slide', background: 'navy', layout: 'lower', accent: 'corner', emphasis: 'first', textMotion: 'stagger', concept: 'Una semilla crece como metáfora del proceso creativo.', elements: [
   {motif:'seed',motion:'draw',color:'cream',x:24,y:28,size:33,delay:0,meaning:'La semilla representa el comienzo del proceso.'},
@@ -22,6 +22,7 @@ const fakeProvider = async (url, options) => {
 
 try {
   assert.equal(MODEL, 'claude-opus-5-5');
+  assert.equal(CODE_EFFORT, 'xhigh');
   assert.deepEqual(await generate(input, fakeProvider), design);
   const sent = JSON.parse(providerRequest.options.body);
   assert.equal(sent.model, MODEL);
@@ -52,9 +53,11 @@ try {
   };
   assert.deepEqual(await generateCode(input, fakeCodeProvider), opusCode);
   assert.equal(JSON.parse(providerRequest.options.body).model, MODEL);
-  assert.equal(JSON.parse(providerRequest.options.body).max_tokens, 24000);
+  assert.equal(JSON.parse(providerRequest.options.body).max_tokens, 64000);
+  assert.equal(JSON.parse(providerRequest.options.body).output_config.effort, CODE_EFFORT);
   assert.match(JSON.parse(providerRequest.options.body).system, /TÚ escribes la implementación creativa real/);
   assert.match(JSON.parse(providerRequest.options.body).system, /jerarquía editorial/);
+  assert.match(JSON.parse(providerRequest.options.body).system, /transformación o revelación/);
 
   delete process.env.ANTHROPIC_API_KEY;
   server.listen(0, '127.0.0.1');
