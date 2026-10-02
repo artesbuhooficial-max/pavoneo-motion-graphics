@@ -222,10 +222,11 @@
     $('close-dialog').addEventListener('click',()=>$('caption-dialog').close());
     $('caption-dialog').addEventListener('close',()=>{activeCaptionId=null;clearInterval(previewTimer);previewTimer=null;});
     $('copy-caption').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('caption-code').value);$('caption-feedback').textContent='Código copiado al portapapeles.';}catch(e){$('caption-code').focus();$('caption-code').select();$('caption-feedback').textContent='Selecciona el código y cópialo con Ctrl+C.';}});
-    $('download-caption').addEventListener('click',()=>{const scene=project.scenes.find(s=>s.id===activeCaptionId);if(!scene)return;const seconds=Math.max(1,Math.min(60,Number($('caption-duration').value)||5));const output=scene.opusCode?renderOpusDocument(scene.opusCode,scene.caption,seconds):captionDocument(captionMarkup(scene),seconds);if(!output)return;const blob=new Blob([output],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=`pavoneo-rotulo-${project.scenes.indexOf(scene)+1}.html`;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);$('caption-feedback').textContent='Archivo HTML descargado.';});
+    $('download-caption').addEventListener('click',()=>{const scene=project.scenes.find(s=>s.id===activeCaptionId);if(!scene)return;const seconds=Math.max(1,Math.min(60,Number($('caption-duration').value)||5));const output=scene.opusCode?wrapOpusDocument(renderOpusDocument(scene.opusCode,scene.caption,seconds)):captionDocument(captionMarkup(scene),seconds);if(!output)return;const blob=new Blob([output],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=`pavoneo-rotulo-${project.scenes.indexOf(scene)+1}.html`;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);$('caption-feedback').textContent='Archivo HTML descargado.';});
     render();
   })();
   </script>
 </body>
 </html>
+
 

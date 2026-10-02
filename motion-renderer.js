@@ -78,8 +78,13 @@
     const stage=stages.length?html:`<div id="opus-stage" data-duration="${duration}">${html}</div>`;
     return `<!doctype html>\n<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="${policy}"><title>Rótulo de Opus 5.5</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden}body{aspect-ratio:9/16;background:transparent;color:white}#opus-stage{position:relative!important;inset:auto!important;width:100%!important;height:100%!important;overflow:hidden;isolation:isolate}#exact-caption{position:relative;z-index:5;white-space:pre-wrap;font-family:Manrope,"Segoe UI",Arial,sans-serif;font-weight:800}</style><style>${code.css}</style></head><body>${stage}<script>"use strict";\n${code.javascript}\n<\/script></body></html>`;
   }
+  function wrapOpusDocument(documentCode) {
+    if (typeof documentCode !== 'string' || !documentCode.startsWith('<!doctype html>')) return null;
+    return `<!doctype html>\n<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rótulo vertical · Opus 5.5</title><style>html,body{margin:0;width:100%;height:100%;overflow:hidden}body{display:grid;place-items:center;background:#071f43}iframe{display:block;width:min(100vw,56.25vh);height:min(100vh,177.7778vw);border:0;background:#0c3065}</style></head><body><iframe title="Animación vertical 9:16" sandbox="allow-scripts" srcdoc="${escape(documentCode)}"></iframe></body></html>`;
+  }
   root.renderPavoneoCaption=renderPavoneoCaption;
   root.renderOpusDocument=renderOpusDocument;
+  root.wrapOpusDocument=wrapOpusDocument;
   root.validOpusCode=validOpusCode;
 })(globalThis);
 

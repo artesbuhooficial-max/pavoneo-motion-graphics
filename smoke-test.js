@@ -36,6 +36,10 @@ const placeholderOutput=context.renderOpusDocument({concept:'La frase aparece co
 assert.equal((placeholderOutput.match(/id="exact-caption"/g)||[]).length,1);
 assert.equal((placeholderOutput.match(/id="opus-stage"/g)||[]).length,1);
 assert.match(placeholderOutput, /id="exact-caption">TEXTO EXACTO<\/div>/);
+const standaloneOutput=context.wrapOpusDocument(placeholderOutput);
+assert.match(standaloneOutput, /width:min\(100vw,56\.25vh\)/);
+assert.match(standaloneOutput, /sandbox="allow-scripts"/);
+assert.match(standaloneOutput, /srcdoc="&lt;!doctype html&gt;/);
 vm.runInNewContext(script, context);
 const cards = element('cards');
 const firstId = () => cards.innerHTML.match(/data-id="([^"]+)"/)?.[1];
